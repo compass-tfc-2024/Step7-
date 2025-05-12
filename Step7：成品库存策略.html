@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Step7：成品库存策略</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p><em><strong>Step7：成品库存策略</strong></em></p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/8e3d992bf02d99969f2d1bac1a31db17.png" alt=""></p>
+<p>即成品安全库存的设计。根据销售签订的客户服务水平、促销策略和产能设计成品安全库存水平。</p>
+<p>安全库存主要来自三个方面：客户承诺的服务水平、销售端需求不确定性和生产端的供给不确定性。客户承诺的服务水平表现为满足顾客需求订单行占总订单行的比例，承诺服务水平越高，所需安全库存越高。销售端需求不确定性表现为需求波动（需求波动越大，需求预测误差越大，即MAPE越大）。生产端的供给不确定性可用生产计划达成率衡量，生产计划达成率越高，供给不确定性越小。</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/84f2c48ea4b0a10509fb48bf26ada484.png" alt=""></p>
+<p>安全库存计算公式为：</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/24b8872c352aecab05978d1716f8754e.png" alt=""></p>
+<p>z：一定客户服务水平下需求变化的安全系数（订单行服务水平）；</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/61c8a51a16936f2681451a513e056d7e.png" alt="">：在订货周期内，需求的标准方差；</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/dee5430b9f969b1bc0308d33ac3dae94.png" alt="">：订货提前期；</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/459bae105c574099f47518d3796749aa.png" alt="">：每期平均需求</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/4d55122f324555d24f862671fc4297da.png" alt="">：提前期标准差,供应次数的波动，与生产计划达成率有关。</p>
+<p>1）服务水平</p>
+<p>这里的<img src="https://mooc1.chaoxing.com/ananas/new-editor/ueditor/themes/default/images/spacer.gif" alt="">安全系数，在使用之前需要理解z系数的由来和明确使用条件。z系数的使用前提是假设需求服从正态分布，但实际当中，需求并不是完全服从正态分布，因此需要我们在使用过程中，根据实际需求分布对z系数进行修正，具体修正方法见：《供应链管理中的数学》之“再订货点公式系列（六）：如何纠偏”中的01部分正态分布不满足问题。<a href="https://mp.weixin.qq.com/s?__biz=MzA5NTMyNDQzMg==&amp;mid=2650872416&amp;idx=1&amp;sn=b14fdcb53627a8d8e9c5481bb337758b&amp;chksm=8bb4aa1fbcc32309f5e4a81911fa3a131eaaa168dbc87b99bd1b36a1a1cd502792edfd5da629&amp;mpshare=1&amp;scene=23&amp;srcid=1214Zzu70hvZRWVlmcj0XIo5&amp;sharer_sharetime=1639443729317&amp;sharer_shareid=906f01659a0064a2727f4da749fc87ee#rd">https://mp.weixin.qq.com/s?__biz=MzA5NTMyNDQzMg==&amp;mid=2650872416&amp;idx=1&amp;sn=b14fdcb53627a8d8e9c5481bb337758b&amp;chksm=8bb4aa1fbcc32309f5e4a81911fa3a131eaaa168dbc87b99bd1b36a1a1cd502792edfd5da629&amp;mpshare=1&amp;scene=23&amp;srcid=1214Zzu70hvZRWVlmcj0XIo5&amp;sharer_sharetime=1639443729317&amp;sharer_shareid=906f01659a0064a2727f4da749fc87ee#rd</a></p>
+<p>2）需求不确定性</p>
+<p>需求不确定性由两部分组成需求标准差和订货提前期。</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/61c8a51a16936f2681451a513e056d7e.png" alt="">：订货提前期内需求的标准方差，在TFC中没有记录需求标准差这项指标，近似的指标为MAPE，MAPE和需求标准差的计算方法不同，具体如下：</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/5efc847a2bd3a6a642eb7dbdadb6f290.png" alt=""></p>
+<p>如果通过数学上严谨的推导，可以计算出两者之间的关系，但是非常复杂，为了简化计算，我们采取数值分析的方法，得出需求标准差和MAPE的近似关系。</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/0d3cce01ef3445057644a28cc9248cc3.png" alt=""></p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/dee5430b9f969b1bc0308d33ac3dae94.png" alt="">：订货提前期，这里的订货提前期可以理解为从生产计划确定开始到客户订货出库的时间间隔，关于提前期的理解可以参考以下的文章：《供应链管理中的数学》之“再订货点公式系列（四）：净提前期。<a href="https://mp.weixin.qq.com/s?__biz=MzA5NTMyNDQzMg==&amp;mid=2650872252&amp;idx=1&amp;sn=1cc20c05b4f748dd48ef469b35957509&amp;chksm=8bb4a9c3bcc320d5355c074a575c9bcbb9a012e93aeec7758351cdcc9ee9be80ef90ca740188&amp;mpshare=1&amp;scene=23&amp;srcid=1214ADLmpJXPg15XLDm1nZAY&amp;sharer_sharetime=1639443086687&amp;sharer_shareid=906f01659a0064a2727f4da749fc87ee#rd"></a><a href="https://mp.weixin.qq.com/s?__biz=MzA5NTMyNDQzMg==&amp;mid=2650872252&amp;idx=1&amp;sn=1cc20c05b4f748dd48ef469b35957509&amp;chksm=8bb4a9c3bcc320d5355c074a575c9bcbb9a012e93aeec7758351cdcc9ee9be80ef90ca740188&amp;mpshare=1&amp;scene=23&amp;srcid=1214ADLmpJXPg15XLDm1nZAY&amp;sharer_sharetime=1639443086687&amp;sharer_shareid=906f01659a0064a2727f4da749fc87ee#rd">https://mp.weixin.qq.com/s?__biz=MzA5NTMyNDQzMg==&amp;mid=2650872252&amp;idx=1&amp;sn=1cc20c05b4f748dd48ef469b35957509&amp;chksm=8bb4a9c3bcc320d5355c074a575c9bcbb9a012e93aeec7758351cdcc9ee9be80ef90ca740188&amp;mpshare=1&amp;scene=23&amp;srcid=1214ADLmpJXPg15XLDm1nZAY&amp;sharer_sharetime=1639443086687&amp;sharer_shareid=906f01659a0064a2727f4da749fc87ee#rd</a></p>
+<p>3）生产不确定性</p>
+<p>生产不确定性由两部分组成提前期标准差和每期平均需求。每期平均需求可在TFC报表查询得到，但提前期标准差应该如何计算？</p>
+<p>首先提前期在公式中其实表达的并不是一个严格的时间概念，而是在一个补货周期中需求发生的次数。我们说的供应的波动，其实也就是次数的波动！我们的生产时间是相对固定的，但是每一个生产时间中产生的订单以及订单行的数量则是波动的，所以我们就可以通过对产生的订单或者订单行的数量的波动进行测算，从而替换掉公式中的“供应的波动”。通过这样的方式，就可以直接将公式中的服务水平与订单或者订单行的服务水平计算方式进行直接对接！从而将公式与实际更好的结合起来。</p>
+<p>通过上述的分析，我们进一步将安全库存的公式变形为：</p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/bd75530be5db6baa50a64dc415497285.png" alt=""></p>
+<p><img src="https://p.ananas.chaoxing.com/star3/origin/5a5c0ebba2cbef554bd38d638adace92.png" alt="">可以理解为订货量的波动，或生产计划的波动。也就是说生产计划波动越大，所需要的安全库存越多，当产能固定时，我们可以近似认为生产计划达成率越高生产计划波动性越小。</p>
+<p>由于生产端不确定性很难量化，因此在计算安全库存时，暂时只考虑需求端不确定性，生产端不确定可根据估算生产计划达成率进行定性或定量的估算。</p>
+<p>4）参数计算</p>
+<p>由于生产端不确定性很难量化，因此在计算安全库存时，暂时只考虑需求端不确定性，生产端不确定可根据估算生产计划达成率进行定性或定量的估算。安全库存计算模块包括周均需求、MAPE估算、服务水平和安全库存。</p>
+<ul>
+<li>
+<p>周均需求：预测值。</p>
+</li>
+<li>
+<p>MAPE估算：不改变促销策略下，MAPE不变（可在供应链成品报告中查询）。促销增加，MAPE增加（从无到重度促销，每级递增3倍，如无促销MAPE为40%，轻度促销约为41.2%，中度约为43.6%，重度约为50.8%），此外如果采用客户端寄售，MAPE会降低。促销策略越小，客户端寄售下MAPE下降幅度越大，反之越小，比如在无促销下，MAPE下降幅度为30-40%，但重度促销下仅下降5%左右。</p>
+</li>
+<li>
+<p>服务水平：根据客户服务水平和产品-客户比例进行估算。</p>
+</li>
+<li>
+<p>计算安全库存下限：服务水平Z系数<em>本轮MAPE</em>1.25*生产计划冻结期。</p>
+</li>
+</ul>
+<p>设置安全库存时，结合各产品需求分布和估算生产计划达成率下，在安全库存下限的基础上适当按比例增加设置的安全库存值。</p>
+</div>
+</body>
+
+</html>
